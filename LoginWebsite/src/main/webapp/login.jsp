@@ -58,11 +58,11 @@
 						<div class="social-login">
 							<span class="social-label">Or login with</span>
 							<ul class="socials">
-								<li><a href="#"><i
+								<li><a href="https://www.facebook.com/login.php/"><i
 										class="display-flex-center zmdi zmdi-facebook"></i></a></li>
-								<li><a href="#"><i
+								<li><a href="https://x.com/i/flow/login"><i
 										class="display-flex-center zmdi zmdi-twitter"></i></a></li>
-								<li><a href="#"><i
+								<li><a href="https://www.google.com/?hl=login"><i
 										class="display-flex-center zmdi zmdi-google"></i></a></li>
 							</ul>
 						</div>
@@ -78,6 +78,30 @@
 	<script src="js/main.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<link rel="stylesheet" href="alert/dist/sweetalert.css">
+
+<script type="text/javascript">
+   window.onload = function() {
+       var username = getCookie("username");
+       var password = getCookie("password");
+
+       if (username && password) {
+           document.getElementById("username").value = username;
+           document.getElementById("password").value = password;
+           document.getElementById("remember-me").checked = true;
+       }
+   };
+
+   function getCookie(name) {
+       var nameEQ = name + "=";
+       var ca = document.cookie.split(';');
+       for (var i = 0; i < ca.length; i++) {
+           var c = ca[i];
+           while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+           if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+       }
+       return null;
+   }
+</script>
 	
 <script type ="text/javascript">
   var status = document.getElementById("status").value;

@@ -24,19 +24,23 @@ public class Registration extends HttpServlet {
     	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
     	String uname = request.getParameter("name");
+    	String ulname = request.getParameter("lastName");
     	String uemail = request.getParameter("email");
     	String upwd = request.getParameter("pass");
+    	String address = request.getParameter("address");
     	String umobile = request.getParameter("contact");
     	RequestDispatcher dispatcher = null;
     	Connection con = null;
     	try {
     		Class.forName("com.mysql.cj.jdbc.Driver");
     		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/barsadb?useSSL=false","root","Varsa@22");
-    		PreparedStatement pst = con.prepareStatement("insert into users(uname,upwd,uemail,umobile) values(?,?,?,?) ");
+    		PreparedStatement pst = con.prepareStatement("insert into users(uname,ulname,uemail,upwd,address,umobile) values(?,?,?,?,?,?) ");
     		pst.setString(1, uname);
-    		pst.setString(2, upwd);
+    		pst.setString(2, ulname);
     		pst.setString(3, uemail);
-    		pst.setString(4, umobile);
+    		pst.setString(4, upwd);
+    		pst.setString(5, address);
+    		pst.setString(6, umobile);
     		
     		int rowCount = pst.executeUpdate();
     		dispatcher = request.getRequestDispatcher("registration.jsp");

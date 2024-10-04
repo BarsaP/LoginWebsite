@@ -30,7 +30,12 @@
 							<div class="form-group">
 								<label for="name"><i
 									class="zmdi zmdi-account material-icons-name"></i></label> <input
-									type="text" name="name" id="name" placeholder="Your Name" />
+									type="text" name="name" id="name" placeholder="Your First Name" />
+							</div>
+							<div class="form-group">
+								<label for="lastName"><i
+									class="zmdi zmdi-account material-icons-name"></i></label> <input
+									type="text" name="lastName" id="lastName" placeholder="Your last Name" />
 							</div>
 							<div class="form-group">
 								<label for="email"><i class="zmdi zmdi-email"></i></label> <input
@@ -41,12 +46,12 @@
 									type="password" name="pass" id="pass" placeholder="Password" />
 							</div>
 							<div class="form-group">
-								<label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
-								<input type="password" name="re_pass" id="re_pass"
-									placeholder="Repeat your password" />
+								<label for="address"><i class="zmdi zmdi-pin"></i></i></label>
+								<input type="text" name="address" id="address"
+									placeholder="Address" />
 							</div>
 							<div class="form-group">
-								<label for="contact"><i class="zmdi zmdi-lock-outline"></i></label>
+								<label for="contact"><i class="zmdi zmdi-phone"></i></i></label>
 								<input type="text" name="contact" id="contact"
 									placeholder="Contact no" />
 							</div>

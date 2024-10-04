@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -25,6 +26,7 @@ public class Login extends HttpServlet {
 		
 		String uemail = request.getParameter("username");
 		String upwd = request.getParameter("password");
+		String rememberMe = request.getParameter("remember-me");
 		HttpSession session = request.getSession();
 		RequestDispatcher dispatcher = null;
 		Connection con = null;
@@ -32,6 +34,20 @@ public class Login extends HttpServlet {
 		try {
     		Class.forName("com.mysql.cj.jdbc.Driver");
     		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/barsadb?useSSL=false","root","Varsa@22");
+    		// Validate username and password
+//            boolean validUser = validateUser(uemail, upwd);
+//
+//            if (validUser) {
+//                if (rememberMe != null && rememberMe.equals("on")) {
+//                    // Set cookies for 7 days
+//                    Cookie usernameCookie = new Cookie("username", uemail);
+//                    usernameCookie.setMaxAge(7 * 24 * 60 * 60); // 7 days
+//                    response.addCookie(usernameCookie);
+//
+//                    Cookie passwordCookie = new Cookie("password", upwd);
+//                    passwordCookie.setMaxAge(7 * 24 * 60 * 60); // 7 days
+//                    response.addCookie(passwordCookie);
+//                }
     		PreparedStatement pst = con.prepareStatement("select * from users where uemail = ? and upwd = ?");
     		pst.setString(1, uemail);
     		pst.setString(2, upwd);
@@ -39,6 +55,15 @@ public class Login extends HttpServlet {
     		ResultSet rs = pst.executeQuery();
     		if(rs.next()) {
     			session.setAttribute("name", rs.getString("uname"));
+    			if (rememberMe != null && rememberMe.equals("on")) {
+                    Cookie usernameCookie = new Cookie("username", uemail);
+                    usernameCookie.setMaxAge(7 * 24 * 60 * 60); // 7 days
+                    response.addCookie(usernameCookie);
+
+                    Cookie passwordCookie = new Cookie("password", upwd);
+                    passwordCookie.setMaxAge(7 * 24 * 60 * 60); // 7 days
+                    response.addCookie(passwordCookie);
+                }
     			dispatcher = request.getRequestDispatcher("index.jsp");
     		}else {
     			request.setAttribute("status", "failed");
@@ -46,9 +71,23 @@ public class Login extends HttpServlet {
     		}
     		dispatcher.forward(request, response);
     		
-	}catch(Exception e){
+	
+		}catch(Exception e){
 		e.printStackTrace();
 	  }
+		finally {
+			try {
+				if(con!=null) {
+					con.close();
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
+//	private boolean validateUser(String username, String password) {
+//        // Implement your user validation logic here
+//        return "user".equals(username) && "password".equals(password);
+//    }
 }
